@@ -1,0 +1,96 @@
+/*******************************************************************
+// 위치 : src/components/css/login/style.scss 
+// 설명 : 로그인 view에 적용되는 스타일에 대해 정의함 
+// 주의 : 로그인 view에 포함된 컴포넌트에 대한 스타일도 함께 정의
+********************************************************************/
+
+@import "../colors";
+
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    .logo {
+        margin-top: 211px;
+    }
+
+    // 로그인 폼
+    .loginForm {
+        margin-top: 52px;
+
+        .input {
+            width: 360px;
+        }
+
+        .loginButton {
+            width: 100%;
+            margin-top: 66px;
+            font-weight: bold;
+            font-size: 20px;
+            color: $basic-white;
+            border-radius: 8px;
+
+            &.active {
+                background: linear-gradient(109.63deg, #78D0FF 1.79%, #4B6EB2 101.38%);
+            }
+        }
+    }
+
+    // 에러메세지
+    .error {
+        position: absolute;
+        right: 30px;
+        bottom: 50px;
+        z-index: 999;
+    }
+
+    // 소셜로그인 모달 버튼
+    .socialLogin {
+        width: 360px;
+        .socialLoginButton {
+            width: 100%;
+            margin-top: 14px;
+            font-size: 20px;
+            color: $basic-white;
+            border-radius: 8px;
+            background: linear-gradient(109.24deg, rgba(168, 235, 18, 0.91) -0.31%, #608F58 145.27%);
+        }
+    }
+
+    // 회원가입 버튼
+    .registerButton {
+        font-weight: bold;
+        font-size: 18px;
+        color: $primary-green;
+        margin-top: 31px;
+    }    
+}
+
+// 소셜로그인 모달
+.v-dialog {
+    .socialLoginButton {
+        height: 140px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 29px 90px;
+        svg {
+            cursor: pointer;
+        }
+    }
+    .title {
+        font-weight: bold !important;
+        font-size: 22px !important;
+        color: $primary-green;
+        font-family: "Noto Sans KR", "sans-serif" !important;
+    }
+
+    .closeButton {
+        font-weight: 500;
+        font-size: 16px !important;
+        color: $primary-green !important;
+    }
+}

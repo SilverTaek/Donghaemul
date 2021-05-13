@@ -1,0 +1,18 @@
+/*******************************************************************
+// 위치 : src/components/css/detail/information.scss 
+// 설명 : 상세페이지의 상품 정보 컴포넌트에 적용되는 스타일에 대해 정의함 
+********************************************************************/
+
+@import "../colors";
+
+.information {
+    .title {
+        text-align: left;
+    }
+    .message {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        height: 30px;
+    }
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.j301.mapper.MemberMapper">
+
+	<insert id="insertMember"
+		parameterType="com.ssafy.j301.member.Member" useGeneratedKeys="true"
+		keyProperty="memberId">
+
+		INSERT INTO member(member_email, member_name,
+		member_password,
+		member_platform_type)
+		VALUES
+		(#{memberEmail},
+		#{memberName},
+		#{memberPassword},
+		#{memberPlatformType});
+
+	</insert>
+
+	<select id="checkEmail" resultType="boolean">
+
+		SELECT
+		IF(COUNT(*) = 1, 1, 0)
+		FROM member
+		WHERE member_email = #{memberEmail};
+
+	</select>
+
+	<select id="getMemberByMemberEmailAndPassword"
+		resultType="com.ssafy.j301.member.Member">
+
+		SELECT member_id AS memberId, member_email AS memberEmail,
+		member_name AS memberName, member_password AS memberPassword
+		FROM
+		member
+		WHERE member_email =
+		#{memberEmail} AND
+		member_password =
+		#{memberPassword};
+
+	</select>
+
+	<select id="getMemberByMemberEmail"
+		resultType="com.ssafy.j301.member.Member">
+
+		SELECT member_id AS memberId, member_email AS memberEmail,
+		member_name AS memberName, member_password AS memberPassword
+		FROM
+		member
+		WHERE member_email =
+		#{memberEmail};
+
+	</select>
+
+</mapper>

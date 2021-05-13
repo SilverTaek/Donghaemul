@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.j301.mapper.IngredientMapper">
+
+	<resultMap type="com.ssafy.j301.ingredientAvg.IngredientAvg"
+		id="IngredientAvg">
+		<result column="ingredient_id" property="ingredientId" />
+		<result column="ingredient_avg_date"
+			property="ingredientAvgDate" />
+		<result column="ingredient_avg_price"
+			property="ingredientAvgPrice" />
+		<result column="ingredient_avg_predict_price"
+			property="ingredientAvgPredictPrice" />
+	</resultMap>
+
+	<resultMap type="com.ssafy.j301.ingredient.Ingredient"
+		id="Ingredient">
+		<result column="ingredient_id" property="ingredientId" />
+		<result column="ingredient_name" property="ingredientName" />
+		<result column="ingredient_name_code"
+			property="ingredientNameCode" />
+		<result column="ingredient_detail_name"
+			property="ingredientDetailName" />
+		<result column="ingredient_detail_name_code"
+			property="ingredientDetailNameCode" />
+		<result column="ingredient_category"
+			property="ingredientCategory" />
+		<result column="ingredient_unit" property="ingredientUnit" />
+		<result column="favorite" property="favorite" />
+		<collection property="ingredientAvg"
+			resultMap="IngredientAvg" />
+	</resultMap>
+
+	<select id="selectAll" resultMap="Ingredient">
+
+		SELECT
+
+		ingredient.ingredient_id,
+		ingredient.ingredient_name,
+		ingredient.ingredient_detail_name,
+		ingredient.ingredient_category,
+		ingredient.ingredient_unit,
+		ingredient_avg.ingredient_avg_id,
+		ingredient_avg.ingredient_avg_price,
+		ingredient_avg.ingredient_avg_date,
+		ingredient_avg.ingredient_avg_predict_price,
+		(
+		SELECT count(*)
+		FROM watch
+		WHERE ingredient.ingredient_id = watch.ingredient_id
+		) AS "count"
+
+		FROM
+		ingredient LEFT OUTER JOIN ingredient_avg ON ingredient.ingredient_id
+		= ingredient_avg.ingredient_id, watch
+
+		WHERE
+		ingredient_avg.ingredient_avg_date = DATE_FORMAT(DATE_ADD(NOW(),
+		INTERVAL -1 WEEK),
+		"%y-%c-%e") AND
+		watch.watch_date
+		=
+		DATE_FORMAT(NOW(),
+		"%y-%c-%e")
+
+		GROUP BY
+		ingredient.ingredient_id
+
+		ORDER BY (
+		SELECT
+		count(*)
+		FROM watch
+		WHERE
+		ingredient.ingredient_id = watch.ingredient_id
+		) DESC;
+
+
+	</select>
+
+	<select id="selectAllName"
+		resultType="com.ssafy.j301.ingredient.RequestIngredientName">
+
+		SELECT ingredient.ingredient_id AS ingredientId,
+		ingredient.ingredient_name AS
+		ingredientName,
+		ingredient.ingredient_detail_name AS ingredientDetailName
+		FROM
+		ingredient
+		LEFT JOIN ingredient_avg ON ingredient_avg.ingredient_id =
+		ingredient.ingredient_id
+		WHERE
+		ingredient_avg.ingredient_avg_date =
+		DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -1 WEEK),
+		"%y-%c-%e")
+
+	</select>
+
+	<select id="selectAllByLogin" resultMap="Ingredient">
+
+		SELECT
+
+		ingredient.ingredient_id,
+		ingredient.ingredient_name,
+		ingredient.ingredient_detail_name,
+		ingredient.ingredient_category,
+		ingredient.ingredient_unit,
+		ingredient_avg.ingredient_avg_id,
+		ingredient_avg.ingredient_avg_price,
+		ingredient_avg.ingredient_avg_date,
+		ingredient_avg.ingredient_avg_predict_price,
+		CASE WHEN
+		ingredient.ingredient_id IN (
+		SELECT ingredient_id
+		FROM favorite
+		WHERE
+		member_id = #{memberId}
+		) THEN 1 ELSE 0 END AS favorite,
+		(
+		SELECT
+		count(*)
+		FROM watch
+		WHERE ingredient.ingredient_id = watch.ingredient_id
+		) AS "count"
+
+		FROM ingredient LEFT OUTER JOIN ingredient_avg ON
+		ingredient.ingredient_id
+		= ingredient_avg.ingredient_id, watch,
+		favorite
+
+		WHERE
+		ingredient_avg.ingredient_avg_date =
+		DATE_FORMAT(DATE_ADD(NOW(),
+		INTERVAL -1 WEEK), "%y-%c-%e") AND
+		watch.watch_date
+		=
+		DATE_FORMAT(NOW(),
+		"%y-%c-%e")
+
+		GROUP BY
+		ingredient.ingredient_id
+
+		ORDER
+		BY CASE WHEN
+		ingredient.ingredient_id in
+		(
+		SELECT ingredient_id
+		FROM
+		favorite
+		WHERE
+		member_id = #{memberId}
+		) THEN 1
+		ELSE 0 END DESC, (
+		SELECT
+		count(*)
+		FROM
+		watch
+		WHERE
+		ingredient.ingredient_id =
+		watch.ingredient_id
+		) DESC;
+
+	</select>
+
+	<select id="selectByIngredientId" resultMap="Ingredient">
+
+		SELECT
+
+		ingredient.ingredient_id,
+		ingredient.ingredient_name,
+		ingredient.ingredient_name_code,
+		ingredient.ingredient_detail_name,
+		ingredient.ingredient_detail_name_code,
+		ingredient.ingredient_category,
+		ingredient.ingredient_unit,
+		ingredient_avg.ingredient_id,
+		ingredient_avg.ingredient_avg_id,
+		ingredient_avg.ingredient_avg_price,
+		ingredient_avg.ingredient_avg_date,
+		ingredient_avg.ingredient_avg_predict_price
+
+		FROM ingredient
+
+		LEFT JOIN
+		ingredient_avg ON ingredient.ingredient_id =
+		ingredient_avg.ingredient_id
+
+		WHERE ingredient.ingredient_id =
+		#{ingredientId} AND ingredient_avg.ingredient_avg_date =
+		DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -1 WEEK), "%y-%c-%e")
+
+	</select>
+
+	<select id="selectByIngredientName" resultMap="Ingredient">
+
+		SELECT
+
+		ingredient.ingredient_id,
+		ingredient.ingredient_name,
+		ingredient.ingredient_name_code,
+		ingredient.ingredient_detail_name,
+		ingredient.ingredient_detail_name_code,
+		ingredient.ingredient_category,
+		ingredient_avg.ingredient_id,
+		ingredient_avg.ingredient_avg_id,
+		ingredient_avg.ingredient_avg_price,
+		ingredient_avg.ingredient_avg_date,
+		ingredient_avg.ingredient_avg_predict_price
+
+		FROM ingredient
+
+		LEFT JOIN
+		ingredient_avg ON ingredient.ingredient_id =
+		ingredient_avg.ingredient_id
+
+		WHERE ingredient.ingredient_name =
+		#{ingredientName} AND ingredient_avg.ingredient_avg_date =
+		DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -1 WEEK), "%y-%c-%e")
+
+	</select>
+
+</mapper>

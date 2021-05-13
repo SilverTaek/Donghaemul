@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.j301.mapper.WatchMapper">
+
+	<insert id="insertWatch"
+		parameterType="com.ssafy.j301.watch.Watch" useGeneratedKeys="true"
+		keyProperty="watchId">
+
+		INSERT INTO watch(member_id, ingredient_id,
+		watch_date)
+		VALUES
+		(#{memberId}, #{ingredientId},
+		DATE_FORMAT(NOW(), "%y-%c-%e"));
+
+	</insert>
+
+	<select id="selectCount" resultType="int">
+
+		SELECT COUNT(ingredient_id)
+		FROM watch
+		WHERE ingredient_id = #{ingredientId}
+		AND watch_date =
+		DATE_FORMAT(NOW(), "%y-%c-%e")
+
+	</select>
+
+</mapper>

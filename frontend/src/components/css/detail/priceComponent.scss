@@ -1,0 +1,47 @@
+/*******************************************************************
+// 위치 : src/components/css/detail/currentPrice.scss 
+// 설명 : 상세페이지의 현재 시세 컴포넌트에 적용되는 스타일에 대해 정의함 
+********************************************************************/
+
+@import "../colors";
+
+.currentPrice {
+    text-align: center;
+
+    .title {
+        text-align: left;
+    }
+
+    .priceContainer {
+        margin-top: 51px;
+        .price {
+            font-weight: bold;
+            font-size: 48px;
+        }
+
+        .unit {
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .range {
+            position: relative;
+            margin-top: 18px;
+            margin-right: 20px;
+            font-weight: bold;
+            font-size: 20px;
+            &.up {
+                color: $primary-red;
+            }
+
+            &.down {
+                color: $primary-blue;
+            }
+            
+            .arrow {
+                position: absolute;
+                top:2px;
+            }
+        }
+    }
+}  

@@ -1,0 +1,52 @@
+/*******************************************************************
+// 위치 : src/components/css/detail/style.scss 
+// 설명 : 상세페이지 view에 공통적으로 적용되는 스타일에 대해 정의함 
+********************************************************************/
+
+@import "../colors";
+
+.detail {
+    width: 100%;
+    height: 100%;
+    background: #F4F4F4;
+
+    .contents {
+        margin: 0 auto;
+        padding: 40px 0;
+
+        .v-card {
+            padding: 25px 20px !important;
+            background: $basic-white;
+            box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12);
+            border-radius: 8px;
+            color: $basic-black;
+
+            .title {
+                font-weight: bold;
+                font-size: 24px;
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+
+    // 첫째줄
+    .row-1 {
+      .v-card {
+        height: 366px;
+      }
+      .infoCard {
+        background-image: var(--bg-url);
+        background-repeat: no-repeat;
+        background-size: 200px 200px;
+        background-position: center 140px;
+      }
+    }
+
+    // 셋째줄
+    .row-3 {
+      .v-card {
+        height: 440px;
+      }
+    }
+}

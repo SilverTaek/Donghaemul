@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.j301.mapper.IngredientAvgMapper">
+
+	<select id="selectRate"
+		resultType="com.ssafy.j301.ingredientAvg.IngredientAvg">
+
+		SELECT
+		ingredient_avg_id AS ingredientAvgId,
+		ingredient_id AS
+		ingredientId,
+		ingredient_avg_date AS ingredientAvgDate,
+		ingredient_avg_previous_price AS ingredientAvgPreviousPrice,
+		ingredient_avg_price AS ingredientAvgPrice,
+		ingredient_avg_predict_price AS ingredientAvgPredictPrice
+		FROM
+		ingredient_avg
+		WHERE ingredient_id
+		= #{ingredientId}
+		AND
+		ingredient_avg_date=DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -1 WEEK),
+		"%y-%c-%e")
+
+	</select>
+
+	<select id="selectIntervalPrice" resultType="int">
+
+		SELECT
+		CASE WHEN
+		ingredient_avg_price -
+		ingredient_avg_previous_price IS NULL
+		THEN 0
+		ELSE
+		ingredient_avg_price -
+		ingredient_avg_previous_price
+		END
+		FROM
+		ingredient_avg
+		WHERE ingredient_id
+		= #{ingredient_id}
+		AND
+		ingredient_avg_date=DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -1 WEEK),
+		"%y-%c-%e")
+
+	</select>
+
+	<select id="selectPrice"
+		resultType="com.ssafy.j301.ingredientAvg.IngredientAvg">
+
+		SELECT
+		ingredient_avg_price AS ingredientAvgPrice,
+		ingredient_unit AS
+		ingredientUnit
+		FROM ingredient_avg, ingredient
+		WHERE
+		ingredient.ingredient_id = ingredient_avg.ingredient_id AND
+		ingredient_avg.ingredient_id = #{ingredientId}
+		AND
+		ingredient_avg_date=DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -1 WEEK),
+		"%y-%c-%e")
+
+	</select>
+
+</mapper>

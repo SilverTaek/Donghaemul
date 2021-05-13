@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.j301.mapper.FavoriteMapper">
+
+	<insert id="insertFavorite"
+		parameterType="com.ssafy.j301.favorite.Favorite">
+
+		INSERT INTO favorite(member_id, ingredient_id)
+		VALUES
+		(#{memberId}, #{ingredientId})
+
+	</insert>
+
+	<delete id="deleteFavorite">
+
+		DELETE FROM favorite WHERE member_id = #{memberId}
+		AND ingredient_id =
+		#{ingredientId}
+
+	</delete>
+
+	<select id="selectAll"
+		resultType="com.ssafy.j301.favorite.Favorite">
+
+		SELECT ingredient_id as ingredientId, member_id as memberId
+		FROM favorite
+		WHERE member_id = #{memberId}
+
+	</select>
+
+	<select id="selectFavorite" resultType="int">
+
+		SELECT
+		IF(COUNT(*) = 1, 1,
+		0)
+		FROM favorite
+		WHERE member_id = #{memberId} AND
+		ingredient_id =
+		#{ingredientId}
+
+	</select>
+
+</mapper>

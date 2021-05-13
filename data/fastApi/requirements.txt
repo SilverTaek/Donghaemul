@@ -1,0 +1,15 @@
+beautifulsoup4
+fastapi==0.63.0
+lxml
+numpy==1.17.3
+pandas==0.25.3
+pydantic==1.8.1
+PyMySQL
+requests
+scikit-learn
+scipy
+sklearn==0.0
+SQLAlchemy
+starlette==0.13.6
+urllib3
+uvicorn==0.13.4

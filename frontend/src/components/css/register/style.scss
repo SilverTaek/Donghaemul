@@ -1,0 +1,49 @@
+/*******************************************************************
+// 위치 : src/components/css/register/style.scss 
+// 설명 : 회원가입 view에 적용되는 스타일에 대해 정의함 
+// 주의 : 회원가입 view에 포함된 컴포넌트에 대한 스타일도 함께 정의
+********************************************************************/
+
+@import "../colors";
+
+.register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;  // 중앙정렬을 위해 높이 설정
+    
+    
+    .emailInput, .passwordInput{
+        width: 360px;
+        margin-top: 77px;
+
+        .informationMessage {
+            margin-bottom: 30px;
+            font-weight: bold;
+            font-size: 20px;
+            color: $primary-green;
+        }
+
+        .goPasswordButton, .registerButton {
+            width: 100%;
+            margin-top: 30px;
+            font-weight: bold;
+            font-size: 20px;
+            color: $basic-white;
+            border-radius: 8px;
+
+            &.active {
+                background: linear-gradient(109.24deg, rgba(168, 235, 18, 0.91) -0.31%, $primary-green 145.27%);
+            }
+        }
+    }
+
+    // 에러메세지
+    .error {
+        position: absolute;
+        right: 30px;
+        bottom: 50px;
+        z-index: 999;
+    }
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.j301.mapper.TransitionMapper">
+
+	<select id="selectTransition"
+		resultType="com.ssafy.j301.transition.Transition">
+		
+		<![CDATA[SELECT ingredient_id AS ingredientId, ingredient_avg_date AS ingredientAvgDate, ingredient_avg_price AS ingredientAvgPrice,
+		ingredient_avg_predict_price AS ingredientAvgPredictPrice
+		FROM ingredient_avg
+		WHERE ingredient_id = #{ingredientId}
+		AND DATEDIFF(SYSDATE(), ingredient_avg_date) <= 365
+		ORDER BY
+		ingredient_avg_date]]>
+
+	</select>
+
+</mapper>
